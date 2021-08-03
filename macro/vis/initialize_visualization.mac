@@ -16,6 +16,7 @@
 /vis/viewer/reset
 /vis/viewer/set/viewpointThetaPhi 135. 45. deg
 /vis/viewer/zoom 0.5
+/vis/viewer/set/style surface
 /vis/scene/add/axes 0 0 0 10 mm
 #
 # for drawing the tracks
@@ -27,4 +28,4 @@
 
 
 
-/vis/viewer/set/background gray
+/vis/viewer/set/background white

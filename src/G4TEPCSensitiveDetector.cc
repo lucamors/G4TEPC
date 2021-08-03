@@ -1,8 +1,7 @@
 #include "G4TEPCSensitiveDetector.hh"
 #include "G4Step.hh"
-#include "G4HCofThisEvent.hh"
 #include "G4SDManager.hh"
-
+#include "G4HCofThisEvent.hh"
 
 G4TEPCSensitiveDetector::G4TEPCSensitiveDetector()
 : G4VSensitiveDetector("det"), fHitsCollection(nullptr){}
@@ -38,11 +37,17 @@ void G4TEPCSensitiveDetector::Initialize(G4HCofThisEvent* hitCollectionOfEvent)
 G4bool G4TEPCSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* history)
 {
 
-  // Sensitive detector code . . .
+  // Create an hit object
+  G4TEPCHit * hit = new G4TEPCHit();
+
+  G4double edep = step->GetTotalEnergyDeposit()/CLHEP::keV;
+
+  hit->SetEdep(edep);
+
+  fHitsCollection->insert(hit);
 
   return true;
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 

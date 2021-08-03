@@ -13,6 +13,7 @@ project(G4TEPC)
 set(
   G4TEPC
   macro/vis/initialize_visualization.mac
+  macro/examples/C12.mac
 )
 
 foreach(_script ${G4TEPC})

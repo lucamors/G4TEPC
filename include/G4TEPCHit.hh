@@ -23,9 +23,12 @@ class G4TEPCHit : public G4VHit
 
     // User Defined Hit Interface
 
+    void SetEdep(G4double edep){ fEdep = edep; };
+    G4double GetEdep(){ return fEdep; };
+
   private:
 
-
+    G4double fEdep;
 };
 
 using G4TEPCHitsCollection = G4THitsCollection<G4TEPCHit>;

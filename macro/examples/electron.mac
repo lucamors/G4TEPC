@@ -1,0 +1,13 @@
+#
+# C-12 Beam
+################################
+
+/run/initialize
+
+/gps/particle e-
+/gps/position 0 0 2 cm
+/gps/energy 500 keV
+/gps/ang/type beam1d
+/analysis/setFileName electron.root
+/run/printProgress 10000
+/run/beamOn 1000000

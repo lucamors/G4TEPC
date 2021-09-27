@@ -39,12 +39,23 @@ G4bool G4TEPCSensitiveDetector::ProcessHits(G4Step* step, G4TouchableHistory* hi
 
   // Create an hit object
   G4TEPCHit * hit = new G4TEPCHit();
-
   G4double edep = step->GetTotalEnergyDeposit()/CLHEP::keV;
 
-  hit->SetEdep(edep);
 
-  fHitsCollection->insert(hit);
+  // The mean chord length is computed as <l> = 4 * <Tissue Equivalent Radius in um> / 3
+#ifdef SPHERICAL_GEOMETRY
+  edep /= ((4.0/3.0) * 1 );
+#else
+  edep /= ((4.0/3.0) * 1 );
+#endif
+
+
+  if(edep > 0)
+  {
+    // G4cout << edep << G4endl;
+    hit->SetEdep(edep);
+    fHitsCollection->insert(hit);
+  }
 
   return true;
 }

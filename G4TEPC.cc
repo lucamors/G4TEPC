@@ -1,5 +1,5 @@
 /*
- Tissue Equivalent Proportional Counter - Geant4 implementation
+ Tissue Equivalent Proportional Counter - Geant4 Application
  --------------------------------------------------------------
  Based on :
 "The microdosimetric extension in TOPAS: Development and
@@ -15,7 +15,11 @@
 #include "Randomize.hh"
 
 // User defined classes
-#include "G4TEPCDetectorConstruction.hh"
+#ifdef SPHERICAL_GEOMETRY
+  #include "G4TEPCSpDetectorConstruction.hh"
+#else
+  #include "G4TEPCCyDetectorConstruction.hh"
+#endif
 #include "G4TEPCPhysicsList.hh"
 #include "G4TEPCPrimaryGeneratorAction.hh"
 #include "G4TEPCRunAction.hh"
@@ -48,7 +52,12 @@ int main(int argc, char** argv)
 
   // Set Mandatory initialization classes
   // ---------------------------------------------------------------------------
-  G4TEPCDetectorConstruction * det  = new G4TEPCDetectorConstruction();
+#ifdef SPHERICAL_GEOMETRY
+  G4TEPCSpDetectorConstruction * det  = new G4TEPCSpDetectorConstruction();
+#else
+  G4TEPCCyDetectorConstruction * det = new G4TEPCCyDetectorConstruction();
+#endif
+
   G4TEPCPhysicsList          * phys = new G4TEPCPhysicsList();
 
   runManager->SetUserInitialization(det);
@@ -79,7 +88,11 @@ int main(int argc, char** argv)
   }
   else
   {
-    uiManager->ApplyCommand("/control/execute macro/vis/initialize_visualization.mac");
+#ifdef SPHERICAL_GEOMETRY
+    uiManager->ApplyCommand("/control/execute macro/vis/initialize_visualization_spherical.mac");
+#else
+  uiManager->ApplyCommand("/control/execute macro/vis/initialize_visualization_cylindrical.mac");
+#endif
     ui->SessionStart();
     delete ui;
   }

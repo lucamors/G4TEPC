@@ -12,8 +12,10 @@ project(G4TEPC)
 #
 set(
   G4TEPC
-  macro/vis/initialize_visualization.mac
+  macro/vis/initialize_visualization_spherical.mac
+    macro/vis/initialize_visualization_cylindrical.mac
   macro/examples/C12.mac
+  macro/examples/electron.mac
 )
 
 foreach(_script ${G4TEPC})
@@ -38,6 +40,7 @@ else()
   find_package(Geant4 REQUIRED)
 endif()
 
+
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
@@ -58,6 +61,13 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 add_executable(G4TEPC G4TEPC.cc ${sources} ${headers})
 target_link_libraries(G4TEPC ${Geant4_LIBRARIES})
 
+option(SPHERICAL_GEOMETRY "Spherical TEPC" ON)
+if(SPHERICAL_GEOMETRY)
+  message("-- Building TEPC using Spherical Geometry.")
+  add_definitions(-DSPHERICAL_GEOMETRY)
+else()
+  message("-- Building TEPC using Cylindrical Geometry.")
+endif()
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
